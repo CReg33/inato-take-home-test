@@ -8,12 +8,14 @@ describe("Drug", () => {
       new Drug("Herbal Tea", 10, 5),
       new Drug("Fervex", 12, 35),
       new Drug("Magic Pill", 15, 40),
+      new Drug("Dafalgan", 15, 40),
     ];
     const updatedDrugs = [
       new Drug("Doliprane", 19, 29),
       new Drug("Herbal Tea", 9, 6),
       new Drug("Fervex", 11, 36),
       new Drug("Magic Pill", 15, 40),
+      new Drug("Dafalgan", 14, 38),
     ];
     expect(new Pharmacy(initialDrugs).updateBenefitValue()).toEqual(
       updatedDrugs
@@ -112,6 +114,23 @@ describe("Drug", () => {
       expect(
         new Pharmacy([new Drug("Fervex", 0, 30)]).updateBenefitValue()
       ).toEqual([new Drug("Fervex", -1, 0)]);
+    });
+  });
+  describe("Dafalgan", () => {
+    it("should not decrease the benefit if it's already equal to 0", () => {
+      expect(
+        new Pharmacy([new Drug("Dafalgan", 22, 0)]).updateBenefitValue()
+      ).toEqual([new Drug("Dafalgan", 21, 0)]);
+    });
+    it("should decrease by 2 the benefit and expiresIn", () => {
+      expect(
+        new Pharmacy([new Drug("Dafalgan", 2, 3)]).updateBenefitValue()
+      ).toEqual([new Drug("Dafalgan", 1, 1)]);
+    });
+    it("should decrease by 4 the benefit once expiresIn < 0", () => {
+      expect(
+        new Pharmacy([new Drug("Dafalgan", -2, 3)]).updateBenefitValue()
+      ).toEqual([new Drug("Dafalgan", -3, 0)]);
     });
   });
 });

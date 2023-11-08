@@ -16,16 +16,16 @@ export class Drug {
     this.benefit = benefit;
   }
 
-  updateStandardDrugBenefit() {
+  updateStandardDrugBenefit(degradation) {
     this.expiresIn -= 1;
     if (this.benefit === 0) {
       return;
     }
     if (this.expiresIn < 0) {
-      this.benefit -= 2;
+      this.benefit -= degradation * 2;
       return;
     }
-    this.benefit -= 1;
+    this.benefit -= degradation;
   }
 
   updateHerbalTeaBenefit() {
@@ -54,6 +54,10 @@ export class Drug {
     this.benefit += 1;
   }
 
+  updateDafalganBenefit() {
+    this.updateStandardDrugBenefit(2);
+  }
+
   checkMinAndMaxBenefit() {
     if (this.benefit > MAX_BENEFIT) {
       this.benefit = MAX_BENEFIT;
@@ -73,8 +77,11 @@ export class Drug {
       case DRUGS.FERVEX:
         this.updateFervexBenefit();
         break;
+      case DRUGS.DAFALGAN:
+        this.updateDafalganBenefit();
+        break;
       default:
-        this.updateStandardDrugBenefit();
+        this.updateStandardDrugBenefit(1);
         break;
     }
     this.checkMinAndMaxBenefit();
