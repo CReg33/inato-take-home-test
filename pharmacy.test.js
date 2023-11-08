@@ -20,6 +20,19 @@ describe("Pharmacy", () => {
     expect(new Pharmacy(initialDrugs).updateBenefitValue()).toEqual(updatedDrugs);
   });
 
+  describe("Drugs constructor", () => {
+    it("should throw if a drug is intialized with a benefit < 0", () => {
+      expect(() => new Drug("Doliprane", 20, -1)).toThrow(
+        new Error("benefit must be > 0")
+      );
+    });
+    it("should throw if a drug is intialized with a benefit > 50", () => {
+      expect(() => new Drug("Doliprane", 20, 51)).toThrow(
+        new Error("benefit must be < 50")
+      );
+    });
+  });
+
   describe("standard drugs", () => {
     it("should not decrease the benefit if it's already equal to 0", () => {
       expect(
