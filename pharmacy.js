@@ -1,5 +1,11 @@
 const MIN_BENEFIT = 0;
 const MAX_BENEFIT = 50;
+const DRUGS = {
+  DOLIPRANE: "Doliprane",
+  HERBAL_TEA: "Herbal Tea",
+  FERVEX: "Fervex",
+  MAGIC_PILL: "Magic Pill",
+}
 export class Drug {
   constructor(name, expiresIn, benefit) {
     if (benefit < MIN_BENEFIT) {
@@ -7,6 +13,9 @@ export class Drug {
     }
     if (benefit > MAX_BENEFIT) {
       throw new Error(`benefit must be < ${MAX_BENEFIT}`);
+    }
+    if (!Object.values(DRUGS).includes(name)) {
+      throw new Error(`${name} is not part of registered drugs`);
     }
     this.name = name;
     this.expiresIn = expiresIn;

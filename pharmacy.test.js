@@ -31,6 +31,11 @@ describe("Pharmacy", () => {
         new Error("benefit must be < 50")
       );
     });
+    it("should throw if a drug is not registered", () => {
+      expect(() => new Drug("Spasfon", 10, 40)).toThrow(
+        new Error("Spasfon is not part of registered drugs")
+      );
+    });
   });
 
   describe("standard drugs", () => {
